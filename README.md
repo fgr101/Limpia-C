@@ -17,3 +17,17 @@ Este programa pretende ser similar a herramientas como CCleaner o BleachBit, per
 Ligero: Está escrito en C, lo que lo hace rápido y consume pocos recursos.
 Personalizable: Puedes agregar o modificar funciones según tus necesidades.
 Sin bloatware: A diferencia de algunas herramientas comerciales, este programa no incluye funciones innecesarias ni anuncios.
+
+============================================================================================================================
+
+¿Qué hacen cada una de las opciones?
+
+2- Limpiar Archivos temporales:
+
+La opción 2 remueve archivos temporales de windows. El comando system("del /f /s /q %TEMP%\\*"); elimina todos los archivos y subcarpetas dentro de la carpeta temporal (%TEMP%) de Windows, liberando espacio en disco al borrar documentos temporales, archivos de instalación y otros datos innecesarios creados por aplicaciones. Gracias a los modificadores /f (fuerza la eliminación), /s (incluye subcarpetas) y /q (modo silencioso).
+
+3- Limpiar cache de Google Chrome:
+
+Cuando el programa borra la caché de Google Chrome, elimina archivos temporales como imágenes, CSS, JavaScript y descargas parciales que el navegador almacena para acelerar la carga de páginas web y reducir el uso de red. Esto no afecta el historial de navegación, las contraseñas guardadas o las configuraciones del navegador, pero puede hacer que las páginas carguen más lentamente la próxima vez, ya que Chrome necesitará descargar los recursos nuevamente. Es una manera rápida de liberar espacio en disco y resolver problemas de rendimiento en el navegador.
+
+En la carpeta %LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache, Google Chrome almacena archivos temporales como imágenes, CSS, JavaScript y partes de páginas web que utiliza para acelerar la carga de sitios visitados y reducir el consumo de datos. Estos archivos no son esenciales para el funcionamiento del navegador, por lo que se pueden eliminar para liberar espacio en disco, aunque esto puede hacer que las páginas carguen más lentamente la próxima vez, ya que Chrome tendrá que descargar los recursos nuevamente.
