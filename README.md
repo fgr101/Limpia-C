@@ -35,3 +35,7 @@ En la carpeta %LOCALAPPDATA%\Google\Chrome\User Data\Default\Cache, Google Chrom
 6-  Liberar la caché de DNS: Resuelve problemas de conectividad liberando la caché del DNS.
 
 La opción liberar caché de DNS ejecuta el comando ipconfig /flushdns, que elimina todas las entradas almacenadas en la caché del DNS (Sistema de Nombres de Dominio) de Windows. Esto puede resolver problemas de conectividad, como sitios web que no cargan correctamente o redirecciones incorrectas, al forzar al sistema a obtener nuevamente las direcciones IP actualizadas de los servidores DNS. Es una operación segura y rápida que no afecta otras configuraciones de red ni la conexión activa.
+
+9- Desactivar servicios no esenciales:
+
+La opción de activar y desactivar servicios innecesarios en Windows permite gestionar los servicios del sistema que consumen recursos pero no son esenciales para el funcionamiento básico del equipo. Ejemplos de servicios que se pueden desactivar incluyen DiagTrack (telemetría), Fax, TapiSrv (telefonía), Spooler (impresión) y Wsearch (búsqueda de Windows). Desactivar estos servicios libera memoria RAM, reduce el uso de CPU y mejora el rendimiento del sistema, aunque puede afectar funciones específicas como impresión o búsquedas rápidas. Esta opción es útil para optimizar el sistema según las necesidades del usuario. 
