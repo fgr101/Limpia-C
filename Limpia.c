@@ -19,6 +19,8 @@ void ClearScreen();
 void ShowMenu();
 void WaitKey();
 void BadServices();
+void MenuServicios();
+void ServicesDeactivate();
 
 char input;
 int opcion;
@@ -31,7 +33,7 @@ int main() {
 	//WaitKey();
 	
 	ShowMenuINI:
-	
+
 	ClearScreen();
 	ShowMenu();
 	
@@ -86,8 +88,14 @@ int main() {
 			CleanStreamio();
 			goto ShowMenuINI;
 			break;
-	
+			
 		case 9:
+
+			MenuServicios();
+			goto ShowMenuINI;
+			break;
+				
+		case 10:
 			
 			ClearScreen();
 			return 0;
@@ -100,6 +108,116 @@ int main() {
 	
 	}
 	
+}
+ 
+void MenuServicios() {
+	 
+	opcion = 0;
+	ClearScreen();
+    
+    printf("=============================================\n");
+    printf(" Limpia C 0.1 - Herramienta de mantenimiento \n");
+    printf("=============================================\n");
+    
+    printf("\n1. Desactivar Telemetria de Windows\n");
+    printf("2. Desactivar Servicios de Fax\n");
+    printf("3. Desactivar Servicios de Telefonia\n");
+    printf("4. Desactivar Servicios de Impresora\n");
+    printf("5. Desactivar Servicios de Windows Search\n");
+    printf("6. Desactivar Biometria\n");
+    printf("7. Desactivar Servicios de Xbox\n");
+    printf("8. Desactivar Servicios de Google Update\n");
+	//printf("9. Desactivar servicios no esenciales\n");	
+    printf("10. Salir\n");
+    
+    printf("\n=============================================\n");
+    
+	scanf("%d", &opcion);
+	
+	switch (opcion) {
+		
+		case 1:
+				
+			ServicesDeactivate("DiagTrack"); // Telemetría
+			break;
+	
+		case 2:
+			
+			ServicesDeactivate("Fax");       // Fax
+			break;
+	
+		case 3:
+			
+			ServicesDeactivate("TapiSrv");   // Teléfono
+			ServicesDeactivate("PhoneSvc");
+			break;
+	
+		case 4:
+	
+			ServicesDeactivate("Spooler");   // Servicio de impresión
+			break;
+	
+		case 5:
+	
+			ServicesDeactivate("Wsearch");   // Windows Search
+			break;
+			
+		case 6:
+		
+			ServicesDeactivate("WbioSrvc");   // Biometria
+			break;
+			
+		case 7:
+		
+			ServicesDeactivate("XblGameSave");   // Servicios de Xbox.
+			ServicesDeactivate("XboxNetApiSvc");
+			ServicesDeactivate("XboxGipSvc");
+			ServicesDeactivate("XblAuthManager");
+			break;
+			
+		case 8:
+			
+			ServicesDeactivate("GoogleUpdaterInternalService144.0.7547.0");   // Servicios de Google Update.
+			ServicesDeactivate("GoogleUpdaterService144.0.7547.0");
+			ServicesDeactivate("gupdate");
+			break;
+					
+		case 10: 
+		
+			return;
+					
+	}
+    
+    WaitKey();
+    return;
+ 
+ }
+
+void ServicesDeactivate(const char *NombreServicio) {
+	
+	printf("\nDesactivando el servicio %s...\n", NombreServicio);
+    
+    //sprintf es una función muy útil en C que permite formatear una cadena de texto 
+    //y almacenarla en un arreglo de caracteres. Es como printf, pero en lugar de 
+    //imprimir en la consola, guarda el resultado en una variable.
+    
+    //char mensaje[100];
+	//int edad = 25;
+	//sprintf(mensaje, "Tengo %d años.", edad);
+	// Ahora `mensaje` contiene "Tengo 25 años."
+    
+    char comando[256];
+    
+    sprintf(comando, "sc stop \"%s\"", NombreServicio);
+    system(comando); // Detener el servicio
+    sprintf(comando, "sc config \"%s\" start=disabled", NombreServicio);
+    system(comando); // Deshabilitar el servicio
+    printf("Servicio %s desactivado.\n", NombreServicio);
+    
+    opcion = 0;
+    
+    return;
+    
 }
 
 // Función para limpiar la papelera de reciclaje...
@@ -168,7 +286,10 @@ void CleanChrome() {
     
     printf("Limpiando la caché de Google Chrome...\n");
     system("rd /s /q \"%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\Cache\"");
-    printf("Caché de Google Chrome limpiada.\n");
+    printf("LOCAL APP DATA >> Google Chrome >> Cache [BORRADO]\n");
+    system("rd /s /q \"%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Default\\Service Worker\\CacheStorage\"");
+    printf("LOCAL APP DATA >> Google Chrome >> CacheStorage [BORRADO]\n");
+    printf("Caché de Google Chrome borrado.\n");
     WaitKey();
     return;
 
@@ -225,16 +346,16 @@ void ShowMenu() {
     printf("4. Vaciar la papelera de reciclaje\n");
     printf("5. Mostrar servicios innecesarios\n");
     printf("6. Liberar la cache de DNS\n");
-    printf("7. Limpiar la cache de Google Chrome\n");
-    printf("8. Limpiar la cache de Streamio\n");
-    printf("9. Salir\n");
+    printf("7. Limpiar cache de Google Chrome\n");
+    printf("8. Limpiar cache de Streamio\n");
+	printf("9. Desactivar servicios no esenciales\n");	
+    printf("10. Salir\n");
     
-    printf("\n=============================================\n");
+    printf("\n============================================\n");
     
     return;
  
  }
-
 
 void WaitKey() {
 	
