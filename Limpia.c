@@ -4,7 +4,7 @@
 
 #ifdef _WIN32
 
-	#include <windows.h> // Requerido para Sleep() y ClearScreen en Windows. 
+	#include <windows.h> // Requerido para Sleep() y ClearScreen en Windows.
 
 #endif
 
@@ -21,6 +21,8 @@ void WaitKey();
 void BadServices();
 void MenuServicios();
 void ServicesDeactivate();
+void RunCleanManager();
+void AboutLimpia();
 
 char input;
 int opcion;
@@ -33,7 +35,7 @@ int main() {
 	//WaitKey();
 	
 	ShowMenuINI:
-
+	
 	ClearScreen();
 	ShowMenu();
 	
@@ -94,11 +96,25 @@ int main() {
 			MenuServicios();
 			goto ShowMenuINI;
 			break;
-				
+			
 		case 10:
+		
+			RunCleanManager();
+			WaitKey();
+			opcion = 0;
+			goto ShowMenuINI;
+			break;
+		
+		case 11:
+		
+			AboutLimpia();
+			goto ShowMenuINI;
+			break;
+		
+		case 12:
 			
 			ClearScreen();
-			return 0;
+			goto End;
 			break;
 			
 		default:
@@ -108,8 +124,36 @@ int main() {
 	
 	}
 	
+	End:
+	return 0;
+
 }
+
+void ShowMenu() {
+    
+    printf("=============================================\n");
+    printf(" Limpia C 0.1 - Herramienta de mantenimiento \n");
+    printf("=============================================\n");
+    
+    printf("\n1. Actualizar paquetes con winget\n");
+    printf("2. Limpiar archivos temporales\n");
+    printf("3. Eliminar y recrear la carpeta temporal\n");
+    printf("4. Vaciar la papelera de reciclaje\n");
+    printf("5. Mostrar servicios innecesarios\n");
+    printf("6. Liberar la cache de DNS\n");
+    printf("7. Limpiar cache de Google Chrome\n");
+    printf("8. Limpiar cache de Streamio\n");
+	printf("9. Desactivar servicios no esenciales\n");
+	printf("10. Abrir 'Limpiador de Disco' de Windows\n");
+	printf("11. Sobre Limpia C\n");
+    printf("12. Salir\n");
+    
+    printf("\n============================================\n");
+    
+    return;
  
+ } 
+
 void MenuServicios() {
 	 
 	opcion = 0;
@@ -127,8 +171,7 @@ void MenuServicios() {
     printf("6. Desactivar Biometria\n");
     printf("7. Desactivar Servicios de Xbox\n");
     printf("8. Desactivar Servicios de Google Update\n");
-	//printf("9. Desactivar servicios no esenciales\n");	
-    printf("10. Salir\n");
+	printf("10. Salir\n");
     
     printf("\n=============================================\n");
     
@@ -181,11 +224,12 @@ void MenuServicios() {
 			ServicesDeactivate("GoogleUpdaterService144.0.7547.0");
 			ServicesDeactivate("gupdate");
 			break;
-					
-		case 10: 
+			
+
+		case 10:
 		
 			return;
-					
+			
 	}
     
     WaitKey();
@@ -334,32 +378,11 @@ void ClearScreen() {
 
 }
 
-void ShowMenu() {
-    
-    printf("=============================================\n");
-    printf(" Limpia C 0.1 - Herramienta de mantenimiento \n");
-    printf("=============================================\n");
-    
-    printf("\n1. Actualizar paquetes con winget\n");
-    printf("2. Limpiar archivos temporales\n");
-    printf("3. Eliminar y recrear la carpeta temporal\n");
-    printf("4. Vaciar la papelera de reciclaje\n");
-    printf("5. Mostrar servicios innecesarios\n");
-    printf("6. Liberar la cache de DNS\n");
-    printf("7. Limpiar cache de Google Chrome\n");
-    printf("8. Limpiar cache de Streamio\n");
-	printf("9. Desactivar servicios no esenciales\n");	
-    printf("10. Salir\n");
-    
-    printf("\n============================================\n");
-    
-    return;
- 
- }
-
 void WaitKey() {
 	
-	// Loop until a key is pressed
+	// Loop until a value is inserted
+	
+	printf("\nIngresa '0' (cero) para continuar >> ", input);
 			
 	do {
 			
@@ -367,9 +390,28 @@ void WaitKey() {
 		
 	} while (input == '\n'); // Ignore newline characters
 
-	//printf("\n Key '%c' pressed. Program continues...\n", input);
-
 	return;
 		
 }
 
+void RunCleanManager() {
+	
+	printf("Abriendo el 'Limpiador de Disco de Windows'...");
+	system("cleanmgr.exe"); // Opens the Cleaner Manager
+	return;
+
+}
+
+void AboutLimpia() {
+    
+    ClearScreen();
+    
+    printf("Para que el programa funcione correctamente es necesario que se ejecute en modo\n");
+    printf("'Administrador de Sistema' para que pueda realizar todas las acciones. De lo contrario\n");
+    printf("Windows negara la mayoria de los comandos que intente aplicar el programa.\n");
+    
+    WaitKey();
+    
+    return;
+ 
+ }
