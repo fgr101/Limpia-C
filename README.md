@@ -1,6 +1,6 @@
 Limpia C: Herramienta de Mantenimiento del Sistema
 
-Limpia C es un programa de mantenimiento del sistema escrito en C, diseñado para automatizar tareas comunes de limpieza y optimización en sistemas Windows. Con una interfaz sencilla y funciones intuitivas, esta herramienta permite liberar espacio en disco, mejorar el rendimiento y mantener tu sistema en óptimas condiciones con solo unos clics.
+Limpia C es un programa de mantenimiento del sistema escrito en C, diseñado para automatizar tareas comunes de limpieza y optimización en sistemas Windows. Con una interfaz sencilla y funciones intuitivas, esta herramienta permite liberar espacio en disco, mejorar el rendimiento y mantener tu sistema en óptimas condiciones en pocos minutos.
 
 Características principales
 
