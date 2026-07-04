@@ -26,6 +26,8 @@ void RunCleanManager();
 void AboutLimpia();
 void AutoCleaning();
 void NewEntryFile();
+void CleanPDFReader();
+void WinUpdateClean();
 
 char input;
 int opcion;
@@ -92,32 +94,48 @@ int main() {
 		case 6:
 		
 			ActionNumber = opcion;
+			WinUpdateClean();
+			goto ShowMenuINI;
+			break;
+				
+				
+		
+		case 7:
+		
+			ActionNumber = opcion;
 			FlushDNS();
 			goto ShowMenuINI;
 			break;
 			
-		case 7:
+		case 8:
 		
 			ActionNumber = opcion;
 			CleanChrome();
 			goto ShowMenuINI;
 			break;
 
-		case 8:
+		case 9:
 			
 			ActionNumber = opcion;	
 			CleanStreamio();
 			goto ShowMenuINI;
 			break;
 			
-		case 9:
-			
+		case 10:
+		
+			ActionNumber = opcion;	
+			CleanPDFReader();
+			goto ShowMenuINI;
+			break;
+		
+		case 11:
+		
 			ActionNumber = opcion;
 			MenuServicios();
 			goto ShowMenuINI;
 			break;
 			
-		case 10:
+		case 12:
 			
 			ActionNumber = opcion;
 			RunCleanManager();
@@ -126,13 +144,13 @@ int main() {
 			goto ShowMenuINI;
 			break;
 		
-		case 11:
+		case 13:
 		
 			AboutLimpia();
 			goto ShowMenuINI;
 			break;
 		
-		case 12:
+		case 14:
 		
 			SwitchAuto = 1;
 			ActionNumber = opcion;
@@ -140,7 +158,7 @@ int main() {
 			goto ShowMenuINI;
 			break;
 		
-		case 13:
+		case 15:
 			
 			ClearScreen();
 			goto End;
@@ -170,14 +188,16 @@ void ShowMenu() {
     printf("3. Eliminar y recrear la carpeta temporal\n");
     printf("4. Vaciar la papelera de reciclaje\n");
     printf("5. Mostrar servicios innecesarios\n");
-    printf("6. Liberar la cache de DNS\n");
-    printf("7. Limpiar cache de Google Chrome\n");
-    printf("8. Limpiar cache de Streamio\n");
-	printf("9. Desactivar servicios no esenciales\n");
-	printf("10. Abrir 'Limpiador de Disco' de Windows\n");
-	printf("11. Sobre Limpia C\n");
-    printf("12. Limpiar automaticamente el sistema. \n");
-    printf("13. Salir\n");
+    printf("6. Limpiar archivos temporales de Windows Update\n");
+    printf("7. Liberar la cache de DNS\n");
+    printf("8. Limpiar cache de Google Chrome\n");
+    printf("9. Limpiar cache de Streamio\n");
+	printf("10. Limpiar cache de PDFReader\n");
+	printf("11. Desactivar servicios no esenciales\n");
+	printf("12. Abrir 'Limpiador de Disco' de Windows\n");
+	printf("13. Sobre Limpia C\n");
+    printf("14. Limpiar automaticamente el sistema. \n");
+    printf("15. Salir\n");
     
     printf("\n============================================\n");
     
@@ -248,6 +268,8 @@ void MenuServicios() {
 			ServicesDeactivate("WbioSrvc");   // Biometria
 			break;
 			
+		
+			
 		case 7:
 			
 			ActionNumber = 107;	
@@ -277,6 +299,26 @@ void MenuServicios() {
     goto DeactivateMenuINI;
  
  }
+
+void WinUpdateClean() {
+	
+	printf("\nDeteniendo el servicio de Windows Update y el de transferencia inteligente en segundo plano (BITS)...\n");
+	system("net stop wuauserv");
+	system("net stop bits");
+    printf("Quitando atributos de solo lectura...\n");
+	system("attrib -r -s -h \"%windir%\\SoftwareDistribution\\Download\\*.*\" /s /d");
+	printf("Borrando el contenido de la carpeta Download de Windows Update...\n");
+	system("rd /s /q \"%windir%\\SoftwareDistribution\\Download\"");
+	system("md \"%windir%\\SoftwareDistribution\\Download\"");
+	printf("Volviendo a activar los servicios...\n");
+	system("net start wuauserv");
+	system("net start bits");
+	NewEntryFile();
+	WaitKey();
+	return;
+
+}
+
 
 void ServicesDeactivate(const char *NombreServicio) {
 	
@@ -421,6 +463,18 @@ void CleanStreamio() {
 
 }
 
+void CleanPDFReader() {
+    
+    printf("Limpiando la cache de PDFReader...\n");
+    system("rd /s /q \"C:\\Users\\ferna\\AppData\\Local\\Packages\\0D9A1B2D.PDFReaderUWP_jhretta7p24aw\\LocalState\\Resources\"");
+    printf("Cache de PDFReader limpio.\n");
+    NewEntryFile();
+    WaitKey();
+    return;
+
+}
+
+
 // Función para mostrar servicios innecesarios
 
 void BadServices() {
@@ -456,7 +510,7 @@ void WaitKey() {
 	
 	if (SwitchAuto != 1) {
 		
-		printf("\nIngresa '0' (cero) para continuar >> ", input);
+		printf("\nIngresa '0' (cero) para continuar >> ");
 			
 		do {
 			
@@ -515,6 +569,7 @@ void AboutLimpia() {
 	DelRecycleBin();
 	FlushDNS();
 	CleanChrome();
+	CleanPDFReader();
 	
 	printf("Limpieza automatica finalizada...\n");
 	SwitchAuto = 0;
@@ -597,28 +652,38 @@ void NewEntryFile() {
 		
 				strcpy (ActionText, "Papelera de reciclaje vacia");
 				break;
-			
+				
 			case 6:
-		
-				strcpy (ActionText, "Cache de DNS liberado");
+			
+				strcpy (ActionText, "Archivos temporales de Windows Update eliminados");
 				break;
 			
 			case 7:
 		
-				strcpy (ActionText, "Cache de Google Chrome borrado");
+				strcpy (ActionText, "Cache de DNS liberado");
 				break;
 			
 			case 8:
 		
+				strcpy (ActionText, "Cache de Google Chrome borrado");
+				break;
+			
+			case 9:
+		
 				strcpy (ActionText, "Cache de Streamio borrado");
 				break;
 				
-			case 9:
+			case 10:
+			
+				strcpy (ActionText, "Cache de PDFReader borrado");
+				break;
+			
+			case 12:
 		
 				strcpy (ActionText, "Limpiador de disco de Windows abierto");
 				break;
 			
-			case 12:
+			case 14:
 		
 				strcpy (ActionText, "Limpieza automatica del sistema");
 				break;
@@ -701,6 +766,7 @@ void NewEntryFile() {
 
 // Version 0.1
 
+//* Limpiar cache de PDFReader. 
 //* Estructura general del programa creada.
 //* Actualización de paquetes con winget
 //* Limpiar archivos temporales.
@@ -716,5 +782,6 @@ void NewEntryFile() {
 //*	Apartado agregado con anotaciones "Sobre Limpia".
 //* Las acciones del usuario quedan registradas en 'registro.txt' para
 //  su posterior consulta.
+//* Borrar descargas de Windows Update en Windows\SoftwareDistribution\Download\...
 
 //======================================================================
